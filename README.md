@@ -33,12 +33,18 @@ Other algorithms can also be used like - naive bayes, Logistic Regression.
 
 ## Result
 ### training result:-
-Accuracy: 0.8675252989880404
-Precision: 0.8651372957942302
-Recall: 0.9826292933280695
+Accuracy: 0.8967517401392111
+<br>
+Precision: 0.8931174089068826
+<br>
+Recall: 0.9854079809410363
+
 ### Test result:-
-Accuracy: 0.8357510528778662
-Precision: 0.8428796636889122
-Recall: 0.9685990338164251
+Accuracy: 0.8649214659685864
+<br>
+Precision: 0.8688853247794708
+<br>
+Recall: 0.9730579254602605
+<br>
 
 #### Aspect based sentiment analysis performance is bounded by natural language processing i.e open to research.
