@@ -42,7 +42,15 @@ def feature_extraction(df,features_req = 20,values_req = 20):
 
     features,values = feature_pruning(fr,features_req,values_req)
 
-    # writing the features and values in file.
+    #writting features on file with their frequency
+    try:
+        file1 = open("features_before_prunning.txt","w")
+        for i in fr:
+            file1.write(i[1] + " = " + str(i[0]) + "\n")
+        file1.close()
+    except:
+        print("! Can't write in file now")
+    
     try:  
         file1 = open("features_after_prunning.txt","w")
         file1.write("Features : \n")
@@ -79,7 +87,7 @@ def create_feature_vector(df,features,values):
             if text[i] in values or text[i] in features:
                 right[i] = text[i]
             else:
-                if i != len(text)-1:
+                if i != len(text)-1 and text[i] != '.':
                     right[i] = right[i+1]
 
         for word in text:
@@ -90,11 +98,11 @@ def create_feature_vector(df,features,values):
                     adj[word] = [[0,last]]
                 else:
                     adj[word].append([0,last])
-            if right[pos] != None:
+            if pos+1 < len(right) and right[pos+1] != None:
                 if word not in adj.keys():
-                    adj[word] = [[1,right[pos]]]
+                    adj[word] = [[1,right[pos+1]]]
                 else:
-                    adj[word].append([1,right[pos]])
+                    adj[word].append([1,right[pos+1]])
             
             if word in values or word in features:
                 last = word
@@ -107,14 +115,14 @@ def create_feature_vector(df,features,values):
         vis = {} # make count of visited nodes i.e words here
         for i in head:
             vis[i] = i
-        while(len(head)):
+        while(len(head) > 0):
             top = head[0]
             head.pop(0)
-
-            for child in adj[top]:
-                if child[1] not in vis:
-                    vis[child[1]] = vis[top]
-                    head.append(child[1])
+            if top in adj.keys():
+                for child in adj[top]:
+                    if child != None and child[1] not in vis:
+                        vis[child[1]] = vis[top]
+                        head.append(child[1])
 
         for key in vis.keys():
             if key in features:
@@ -125,8 +133,3 @@ def create_feature_vector(df,features,values):
         y.append(verdict)
     
     return feature_vectors,y
-            
-
-                
-           
-
